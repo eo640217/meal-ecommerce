@@ -6,24 +6,24 @@ import {Link} from 'react-router-dom';
 const Meal = ({meal}) =>{
   return (
     <>
-     <Card className= 'my-3 rounded grow'>
-       <Link to={`/meal/${meal._id}`}>
+     <Card className= 'my-3 rounded'>
+       <Link to={`/meal/${meal._id}`}  className='grow'>
           <Card.Img src={meal.image} variant='top'/>
           </Link>
-          <Card.Body >
+          <Card.Body>
           <Link to={`/meal/${meal._id}`}>
-            <Card.Title className="b f4" as='div'>
+            <Card.Title className="b f4 grow" as='div'>
               <strong>
                 {meal.name}
               </strong>
             </Card.Title>
           </Link>
 
-            <Card.Text as='div'>
+            {/* <Card.Text as='div'>
               <div className='my-3'>
                 {meal.description}
               </div>
-            </Card.Text>
+            </Card.Text> */}
 
             <Card.Text as='div'>
               <Rating value={meal.rating} 

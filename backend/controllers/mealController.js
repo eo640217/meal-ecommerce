@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Meal from "../models/mealModel.js";
 
 const getMeals = asyncHandler(async (req, res) => {
-    const meals = await Meal.find({})
+    const meals = await Meal.find({}).sort({rating: -1}).limit(3);
     res.json(meals)
 })
 

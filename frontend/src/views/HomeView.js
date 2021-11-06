@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
-import {Row, Col, Alert} from 'react-bootstrap';
+import {Row, Col, Alert, Container} from 'react-bootstrap';
 import Meal from "../components/Meal";
 import {useDispatch,useSelector} from 'react-redux';
 import {listMeals} from '../actions/mealAction';
 // import Message from "../components/Message.js";
-// import Loader from "../components/Loader";
+import Loader from "../components/Loader";
 import MealCarousel from "../components/MealCarousel";
 
 
@@ -20,11 +20,13 @@ const HomeView = () => {
 
     return (
         <>
-            {/* <MealCarousel /> */}
             <h1 className='b shadow-5 bg-white'>Meals of the Week</h1>
+            <Container  >
+                <MealCarousel className="w-1" />
+            </Container>
             {
             loading
-            ? <h1>loading...</h1>
+            ? <Loader/>
             : err
             ?(<Alert variant='danger'>{err}</Alert>)
             :<Row >
