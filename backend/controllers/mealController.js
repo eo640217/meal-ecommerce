@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Meal from "../models/mealModel.js";
 
 const getMeals = asyncHandler(async (req, res) => {
-    const meals = await Meal.find({}).sort({rating: -1}).limit(3);
+    const meals = await Meal.find({});
     res.json(meals)
 })
 
@@ -16,8 +16,9 @@ const getMealById = asyncHandler(async (req, res) => {
     }
 })
 
-const getTopMeals= asyncHandler(async (req,res) => {
+const getTopMeals = asyncHandler(async (req,res) => {
     const meals = await Meal.find({}).sort({rating:-1}).limit(3)
+    // console.log("21 MEALCONTROLLER:\n",meals);
     res.json(meals)
 
 })

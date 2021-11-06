@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
-import {Row, Col, Alert, Container} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 import Meal from "../components/Meal";
 import {useDispatch,useSelector} from 'react-redux';
 import {listMeals} from '../actions/mealAction';
-// import Message from "../components/Message.js";
+import Message from "../components/Message";
 import Loader from "../components/Loader";
 import MealCarousel from "../components/MealCarousel";
 
@@ -13,7 +13,6 @@ const HomeView = () => {
     const mealList =  useSelector(state => state.mealList);
     const {loading, err, meals} = mealList;
 
-    
     useEffect(() => {
         dispatch(listMeals())            
     }, [dispatch])
@@ -21,16 +20,14 @@ const HomeView = () => {
     return (
         <>
             <h1 className='b shadow-5 bg-white'>Meals of the Week</h1>
-            <Container  >
-                <MealCarousel className="w-1" />
-            </Container>
+            <MealCarousel/>
             {
             loading
             ? <Loader/>
             : err
-            ?(<Alert variant='danger'>{err}</Alert>)
+            ?(<Message variant='danger'>{err}</Message>)
             :<Row >
-                {(meals || []).map((meal) =>( 
+                {meals.map((meal) =>( 
                     <Col sm={12} md={6} lg={4} xl={3} key={meal._id}>  
                         <Meal meal={meal}/>
                     </Col>
