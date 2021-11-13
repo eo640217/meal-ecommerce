@@ -20,7 +20,7 @@ const HomeView = () => {
     return (
         <>
             <h1 className='b shadow-5 bg-white'>Meals of the Week</h1>
-            <MealCarousel/>
+            <div className=''><MealCarousel/></div>
             {
             loading
             ? <Loader/>
@@ -28,7 +28,7 @@ const HomeView = () => {
             ?(<Message variant='danger'>{error}</Message>)
             :<Row >
                 {meals.map((meal) =>( 
-                    <Col sm={12} md={6} lg={4} xl={3} key={meal._id}>  
+                    <Col  md={4} key={meal._id}>  
                         <Meal meal={meal}/>
                     </Col>
                     ))}

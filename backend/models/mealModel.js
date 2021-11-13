@@ -28,9 +28,12 @@ const mealSchema = mongoose.Schema({
         type:String,
         required:true,
     },
+    imageCarousel: {
+        type:String,
+        required:true,
+    },
     metadata:{
         type:String,
-
     },
     reviews:[reviewsSchema]
     ,
@@ -42,15 +45,11 @@ const mealSchema = mongoose.Schema({
     numReviews:{
         type:Number,
     },
-
     quantity:{
         type:Number,
         required:true,
         default:0
     },
-
-
-
 }, {
     timestamps: true
 })

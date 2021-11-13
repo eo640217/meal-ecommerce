@@ -24,7 +24,7 @@ const MealView = ({match, history}) => {
     }
     return (
         <>
-            <Link className='btn btn-dark grow my-3 shadow-1' to ='/'>Back</Link> 
+            <Link className='btn btn-dark my-3 shadow-1' to ='/'>Back</Link> 
         {
             loading
             ? <Loader/> 
@@ -83,7 +83,7 @@ const MealView = ({match, history}) => {
 
                             <ListGroup.Item >
                                 <Button 
-                                className='btn btn-dark grow' 
+                                className='btn btn-dark' 
                                 type='button' 
                                 disabled={meal.quantity === 0}
                                 onClick={addToCartHandler}

@@ -29,13 +29,13 @@ const MealCarousel = () => {
         ? (<Loader/>) 
         : error 
         ? (<Message variant='danger'>{error}</Message>)
-        : (<Carousel pause='hover' className='bg-dark'> 
+        : (<Carousel pause='hover' className='bg-moon-gray shadow'> 
             {(meals||[]).map(meal => (
             <Carousel.Item key={meal._id}>
                 <Link to={`/meal/${meal._id}`}>
-                    <Image src={meal.image} alt={meal.name} fluid />
+                    <Image src={meal.imageCarousel} alt={meal.name} fluid />
                     <Carousel.Caption className='carousel-caption'>
-                        <h2>{meal.name} ({meal.price})</h2>
+                        <h2 className='bg-near-white'>{meal.name} ({meal.price})</h2>
                     </Carousel.Caption>
                 </Link>
             </Carousel.Item>))}

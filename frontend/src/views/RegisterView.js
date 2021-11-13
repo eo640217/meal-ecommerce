@@ -6,6 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {register} from '../actions/userAction'
 import FormContainer from '../components/FormContainer'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 
 const RegisterView = ({location, history}) => {
@@ -39,11 +41,21 @@ const RegisterView = ({location, history}) => {
             {error && <Message variant='danger'>{error}{console.log(error)}</Message>}
             {message && <Message variant='danger'>{message}</Message>}
             {loading && <Loader/>}
-            <Form className='py-3' onSubmit={submitHandler}>
+            <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label> Name </Form.Label>
                     <Form.Control type='name' placeholder='Enter Name' value={name} onChange={(e)=>setName(e.target.value)}/>
                 </Form.Group>
+                {/* <TextField
+                    className = 'tc'
+                    required
+                    id='name'
+                    label="Name"
+                    margin="normal" 
+                    placeholder="Name"
+                    onChange={(e)=>setName(e.target.value)}
+                    /> */}
+                
 
                 <Form.Group controlId='email'>
                     <Form.Label>Email Address</Form.Label>
