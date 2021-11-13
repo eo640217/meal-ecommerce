@@ -4,7 +4,6 @@ import {getMeals, getMealById, getTopMeals} from '../controllers/mealController.
 const router = express.Router();
 
 router.route('/').get(getMeals);
-router.route('/meals').get(getMeals);
 router.get('/top',getTopMeals);
 router.route('/:id').get(getMealById);
 

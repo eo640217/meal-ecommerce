@@ -5,13 +5,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import { listMealDetails } from "../actions/mealAction";
 import Rating from '../components/Rating';
 import Loader from "../components/Loader";
+import Message from "../components/Message";
 // import Message from "../components/Message";
 
 const MealView = ({match, history}) => {
 
     const dispatch = useDispatch();
     const mealDetails =  useSelector(state => state.mealDetails);
-    const {loading, err, meal} = mealDetails;
+    const {loading, error, meal} = mealDetails;
     const [qty,setQty] = useState(1);
 
     useEffect(() => {
@@ -27,8 +28,8 @@ const MealView = ({match, history}) => {
         {
             loading
             ? <Loader/> 
-            : err
-            ? (<Alert variant='danger'>{err}</Alert>)
+            : error
+            ? (<Message variant='danger'>{error}</Message>)
             :<Row>
                 <Col md={6}>
                     <Image className='shadow-1' src={meal.image} alt={meal.image}fluid/>
@@ -40,7 +41,7 @@ const MealView = ({match, history}) => {
                     </ListGroup.Item>
 
                     <ListGroup.Item>
-                        <Rating value={meal.name} text={`${meal.numReviews} Reviews`} color='#F0A500'/>
+                        <Rating value={meal.rating} text={`${meal.numReviews} Reviews`} color='#F0A500'/>
                     </ListGroup.Item>
                     
                     <ListGroup.Item>
@@ -72,6 +73,7 @@ const MealView = ({match, history}) => {
                                         <Col>Quantity</Col>
                                         <Col>
                                             <Form.Control as='select' value={qty} onChange={(e)=>setQty(e.target.value)}>
+                                                {/* displays only up to the amount of stock the item has */}
                                                 {[...Array(meal.quantity).keys()].map(x=>(<option key={x+1} value = {x+1}>{x+1}</option>))}
                                             </Form.Control>
                                         </Col>

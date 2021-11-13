@@ -28,47 +28,43 @@ const RegisterView = ({location, history}) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if(password !== confirmPassword){
-            setMessage('Passwords do not match');
-        }
+        if(password !== confirmPassword){setMessage('Passwords do not match');}
         else
-            { dispatch(register(name,email,password))}
+            { dispatch(register(email,name,password))}
     }
 
     return (
          <FormContainer>
             <h1>Sign Up</h1>
+            {error && <Message variant='danger'>{error}</Message>}
+            {message && <Message variant='danger'>{message}</Message>}
             {loading && <Loader/>}
-            {message && <Message variant='danger'>{message}{console.log(message)}</Message>}
-            {error && <Message variant='danger'>{error}{console.log(error)}</Message>}
             <Form className='py-3' onSubmit={submitHandler}>
             <Form.Group controlId='name'>
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type='name' placeholder='Enter Name' value={name} onChange={(e)=>setName(e.target.value)}>
-
-                    </Form.Control>
+                    <Form.Control type='name' placeholder='Enter Name' value={name} onChange={(e)=>setName(e.target.value)}/>
                 </Form.Group>
+
                 <Form.Group controlId='email'>
                     <Form.Label>Email Address</Form.Label>
-                    <Form.Control type='email' placeholder='Enter Email' value={email} onChange={(e)=>setEmail(e.target.value)}>
-
-                    </Form.Control>
+                    <Form.Control type='email' placeholder='Enter Email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                 </Form.Group>
+
                 <Form.Group controlId='password'>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type='password' placeholder='Enter password' value={password} onChange={(e)=>setPassword(e.target.value)}>
-                    </Form.Control>
+                    <Form.Control type='password' placeholder='Enter password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
                 </Form.Group>
+
                 <Form.Group controlId='confirmPassword'>
                     <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type='password' placeholder='Confirm password' value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}>
-                    </Form.Control>
+                    <Form.Control type='password' placeholder='Confirm password' value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/>
+                   
                 </Form.Group>
                 <Button className="py-3 grow" type='submit' variant='primary'>Register</Button>
             </Form>
             <Row className='py-3'>
                 <Col>
-                    Have an account?<Link to={redirect? `/login?redirect=${redirect}`:'/login'}> Login</Link>
+                    Have an account?<Link to={redirect? `/signin?redirect=${redirect}`:'/signin'}> Login</Link>
                 </Col>
             </Row>
             

@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     },
     number: {
         type:Number,
-        required:true,
+        required:false,
     },
 
 }, {

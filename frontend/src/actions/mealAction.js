@@ -6,7 +6,6 @@ export const listTopMeals = () => async (dispatch) => {
     try {
         dispatch({type:MEAL_TOP_REQUEST})
         const {data} = await axios.get(`/api/meals/top`);
-
         dispatch({
             type:MEAL_TOP_SUCCESS,
             payload :data
@@ -39,7 +38,7 @@ export const listMeals = () => async (dispatch) => {
     {
         dispatch({
             type:MEAL_LIST_FAIL,
-            payload: err.response && err.response.data.message ? err.response.data.message:err.message,
+            payload: err.response && err.response.data.message ? err.response.data.message : err.message,
         })
 
     }

@@ -9,6 +9,7 @@ import MealView from './views/MealView';
 import CartView from './views/CartView';
 import LoginView from './views/LoginView';
 import RegisterView from './views/RegisterView';
+import ProfileView from './views/ProfileView';
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
               <Route path='/' component={HomeView} exact/>
               <Route path='/meal/:id' component={MealView} exact/>
               <Route path='/cart/:id?' component={CartView} exact/>
+              <Route path='/profile' component={ProfileView} exact/>
           </Container>
         </main>
         <Footer/>

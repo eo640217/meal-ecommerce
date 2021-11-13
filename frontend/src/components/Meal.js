@@ -7,7 +7,7 @@ const Meal = ({meal}) =>{
   return (
     <>
      <Card className= 'my-3 rounded'>
-       <Link to={`/meal/${meal._id}`}  className='grow'>
+       <Link to={`/meal/${meal._id}`}  className=''>
           <Card.Img src={meal.image} variant='top'/>
           </Link>
           <Card.Body>

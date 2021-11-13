@@ -11,14 +11,14 @@ const Header = () =>{
     const userLogin = useSelector(state => state.userLogin);
     const {userInfo} = userLogin;
     const logoutHandler = () => {
-        dispatch(logout)
+        dispatch(logout());
     }
     return (
         <header>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand >EASY MEALSY</Navbar.Brand>
+                        <Navbar.Brand >MEALSY</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">

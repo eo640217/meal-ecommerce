@@ -10,8 +10,8 @@ import MealCarousel from "../components/MealCarousel";
 
 const HomeView = () => {
     const dispatch = useDispatch();
-    const mealList =  useSelector(state => state.mealList);
-    const {loading, err, meals} = mealList;
+    const mealList =  useSelector((state) => state.mealList);
+    const {loading, error, meals} = mealList;
 
     useEffect(() => {
         dispatch(listMeals())            
@@ -24,8 +24,8 @@ const HomeView = () => {
             {
             loading
             ? <Loader/>
-            : err
-            ?(<Message variant='danger'>{err}</Message>)
+            : error
+            ?(<Message variant='danger'>{error}</Message>)
             :<Row >
                 {meals.map((meal) =>( 
                     <Col sm={12} md={6} lg={4} xl={3} key={meal._id}>  
