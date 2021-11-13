@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {mealListReducer, mealDetailsReducer, mealTopRateReducer} from './reducers/mealReducers'
 import {cartReducer} from './reducers/cartReducers';
-import {userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer, userUpdateProfile} from './reducers/userReducers';
+import {userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer} from './reducers/userReducers';
 
 const reducer = combineReducers({
     mealList: mealListReducer,

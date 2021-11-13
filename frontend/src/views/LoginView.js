@@ -31,7 +31,7 @@ const LoginView = ({location, history}) => {
          <FormContainer>
             <h1>Sign In</h1>
             {loading && <Loader/>}
-            {error && <Message variant='danger'>{error}{console.log(error)}</Message>}
+            {error && <Message variant='danger'>{error}</Message>}
             <Form className='py-3' onSubmit={submitHandler}>
                 <Form.Group controlId='email'>
                     <Form.Label>Email Address</Form.Label>
@@ -43,7 +43,7 @@ const LoginView = ({location, history}) => {
                 </Form.Group>
                 <Button className="py-3 grow" type='submit' variant='primary'>Log In</Button>
             </Form>
-            <Row className='py-3 grow'>
+            <Row className='py-3'>
                 <Col>
                     New Customer?<Link to={redirect? `/register?redirect=${redirect}`:'/register'}> Register</Link>
                 </Col>

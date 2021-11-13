@@ -1,5 +1,5 @@
 import axios from "axios"
-import { USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../constants/userConstants"
+import { USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../constants/userConstants"
 
 export const login =(email, password) => async (dispatch) =>{
     try{
@@ -11,7 +11,7 @@ export const login =(email, password) => async (dispatch) =>{
                 'Content-Type':'application/json'
             }
         }
-        const {data} = await axios.post('/api/users/login',{email,password},config)
+        const {data} = await axios.post('/api/users/signin',{email,password},config)
 
         dispatch({
             type:USER_LOGIN_SUCCESS,
@@ -35,7 +35,7 @@ export const logout =() => async (dispatch) =>{
     dispatch({type: USER_LOGOUT});
 }
 
-export const register =(email, name, password) => async (dispatch) =>{
+export const register =(name, email, password) => async (dispatch) =>{
     try{
         dispatch({
             type:USER_REGISTER_REQUEST
@@ -45,7 +45,7 @@ export const register =(email, name, password) => async (dispatch) =>{
                 'Content-Type':'application/json'
             }
         }
-        const {data} = await axios.post('/api/users',{name, email,password},config)
+        const {data} = await axios.post('/api/users',{name,email,password},config)
 
         dispatch({
             type:USER_REGISTER_SUCCESS,
@@ -61,7 +61,7 @@ export const register =(email, name, password) => async (dispatch) =>{
     }
     catch(error){
         dispatch({
-            type:USER_LOGIN_FAIL,
+            type:USER_REGISTER_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message:error.message,
         })
 

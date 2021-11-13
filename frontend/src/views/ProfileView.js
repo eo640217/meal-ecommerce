@@ -52,7 +52,7 @@ const ProfileView = ({ history}) => {
                <h2>User Profile</h2>
                 {message && <Message variant='danger'>{message}</Message>}
                 {error && <Message variant='danger'>{error}</Message>}
-                {success && <Message variant='success'>{success}</Message>}
+                {success && <Message variant='success'>Profile Updated</Message>}
                 {loading && <Loader/>}
                 <Form className='py-3' onSubmit={submitHandler}>
                     <Form.Group controlId='name'>
@@ -91,7 +91,7 @@ const ProfileView = ({ history}) => {
                             onChange={(e)=>setConfirmPassword(e.target.value)}/>
                         
                         </Form.Group>
-                    <Button className="py-3 grow" type='submit' variant='primary'>Update</Button>
+                    <Button className="py-3" type='submit' variant='primary'>Update</Button>
                 </Form>        
 
                </Col>

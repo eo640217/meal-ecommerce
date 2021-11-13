@@ -30,13 +30,13 @@ const RegisterView = ({location, history}) => {
         e.preventDefault()
         if(password !== confirmPassword){setMessage('Passwords do not match');}
         else
-            { dispatch(register(email,name,password))}
+            { dispatch(register(name, email,password))}
     }
 
     return (
          <FormContainer>
             <h1>Sign Up</h1>
-            {error && <Message variant='danger'>{error}</Message>}
+            {error && <Message variant='danger'>{error}{console.log(error)}</Message>}
             {message && <Message variant='danger'>{message}</Message>}
             {loading && <Loader/>}
             <Form className='py-3' onSubmit={submitHandler}>
