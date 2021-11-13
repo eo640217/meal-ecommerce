@@ -2,8 +2,8 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Row, Col, Image, Card,ListGroup, Button, Form, Alert} from 'react-bootstrap';
-// import Message from "../components/Message";
 import {addToCart, removeFromCart} from '../actions/cartAction'
+import Message from "../components/Message";
 
 
 const CartView = ({match,location,history}) => {
@@ -30,7 +30,7 @@ const CartView = ({match,location,history}) => {
                 <h1>Shopping Cart</h1>
                 {
                 cartItems.length === 0 
-                ? (<Alert> Cart is Empty <Link to='/'>Go Back</Link></Alert>)
+                ? (<Message> Cart is Empty <Link to='/'>Go Back</Link></Message>)
                 : (
                     <ListGroup variant='flush' className='shadow-3'>
                     {cartItems.map(item => (
