@@ -26,8 +26,8 @@ const CartView = ({match,location,history}) => {
     
     return (
         <Row>
-            <Col sm= {4}md={6} lg={8}>
                 <h1>Shopping Cart</h1>
+            <Col sm= {4}md={6} lg={8}>
                 {
                 cartItems.length === 0 
                 ? (<Message> Cart is Empty <Link to='/'>Go Back</Link></Message>)
@@ -39,17 +39,15 @@ const CartView = ({match,location,history}) => {
                                 <Col md={3}>
                                     <Image src={item.image} alt={item.name} fluid rounded />
                                 </Col>
-                                <Col md={3} className='tc b grow f3 pt6 '> 
+                                <Col md={3} className='tc b f3 pt6 '> 
                                     <Link to = {`/meal/${item.meal}`} >{item.name}</Link>
                                 </Col>
                                 <Col md={2} className='tc f4 pt6 '>$ {item.price}</Col>
                                 <Col md={2} className='tc b pt6 '>
-                                    <Form.Control 
-                                    
+                                    <Form.Control                                     
                                         as='select' 
                                         value={item.qty}
-                                        onChange={(e)=>dispatch(addToCart(item.meal, Number(e.target.value)))}>
-                                        
+                                        onChange={(e)=>dispatch(addToCart(item.meal, Number(e.target.value)))}>                                   
 
                                         {[...Array(item.instock).keys()].map((x)=>(<option key={x+1} value = {x+1}>{x+1}</option>))}
 
