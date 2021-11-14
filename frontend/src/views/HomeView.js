@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Row, Col} from 'react-bootstrap';
+import {Row, Col, Card} from 'react-bootstrap';
 import Meal from "../components/Meal";
 import {useDispatch,useSelector} from 'react-redux';
 import {listMeals} from '../actions/mealAction';
@@ -19,8 +19,17 @@ const HomeView = () => {
 
     return (
         <>
-            <h1 className='b shadow-5 bg-white'>Meals of the Week</h1>
+        <Card className="">
             <div className=''><MealCarousel/></div>
+            <Col>
+            <Card>
+                <h2 className='b'>Meals of the Week</h2>            
+                <p>Enjoy New Meals every Sunday!</p>        
+            </Card>    
+            </Col>
+            
+            
+        </Card>
             {
             loading
             ? <Loader/>

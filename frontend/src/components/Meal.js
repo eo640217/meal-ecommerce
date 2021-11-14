@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Rating from './Rating';
 import {Link} from 'react-router-dom';
+import Collapse from 'react-bootstrap/Collapse'
+import { Button} from '@mui/material'
+
+
 
 const Meal = ({meal}) =>{
+  const [open, setOpen] = useState (false);
   return (
     <>
      <Card className= 'my-3 rounded'>
@@ -37,6 +42,21 @@ const Meal = ({meal}) =>{
                 $ {meal.price}
               </div>
             </Card.Text>
+
+            <Button
+              onClick={() => setOpen(!open)}
+              aria-controls="mealDetails-collapse-text"
+              aria-expanded={open}
+              variant="outlined"
+            >
+              Description
+            </Button>
+
+            <Collapse in={open}>
+              <div id="mealDetails-collapse-text">
+               {meal.description}
+              </div>
+            </Collapse>
           </Card.Body>
      </Card>
     </>
