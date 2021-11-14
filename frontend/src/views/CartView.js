@@ -21,7 +21,7 @@ const CartView = ({match,location,history}) => {
         dispatch(removeFromCart(id))
     };
     const checkoutHandler = (id) =>{
-        // history.push('/login?redirect=shipping')
+        history.push('/shipping')
     }
     
     return (
@@ -39,11 +39,11 @@ const CartView = ({match,location,history}) => {
                                 <Col md={3}>
                                     <Image src={item.image} alt={item.name} fluid rounded />
                                 </Col>
-                                <Col md={3} className='tc b f3 pt6 '> 
+                                <Col md={3} className='b f3 pt6 '> 
                                     <Link to = {`/meal/${item.meal}`} >{item.name}</Link>
                                 </Col>
-                                <Col md={2} className='tc f4 pt6 '>$ {item.price}</Col>
-                                <Col md={2} className='tc b pt6 '>
+                                <Col md={2} className='f4 pt6 '>$ {item.price}</Col>
+                                <Col md={2} className='b pt6 '>
                                     <Form.Control                                     
                                         as='select' 
                                         value={item.qty}
@@ -53,7 +53,7 @@ const CartView = ({match,location,history}) => {
 
                                     </Form.Control>
                                 </Col>
-                                <Col sm={1} md={2} className='tc b pt6 '>
+                                <Col sm={1} md={2} className='b pt6 '>
                                     <Button type='button' variant='light' onClick={() => removeFromCartHandler(item.meal)}>
                                         <i className='fas fa-trash'></i>
                                     </Button>

@@ -15,10 +15,10 @@ const Header = () =>{
     }
     return (
         <header>
-            <Navbar className='shadow' collapseOnSelect expand="lg" bg="cool-gray" variant="dark" >
+            <Navbar className='shadow' collapseOnSelect expand="lg" bg="cool-gray" >
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand className='blue' >MEALSY</Navbar.Brand>
+                        <Navbar.Brand className='white' >MEALSY</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">

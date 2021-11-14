@@ -6,6 +6,7 @@ import {listMeals} from '../actions/mealAction';
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import MealCarousel from "../components/MealCarousel";
+import Landing from "../components/Landing";
 
 
 const HomeView = () => {
@@ -35,13 +36,16 @@ const HomeView = () => {
             ? <Loader/>
             : error
             ?(<Message variant='danger'>{error}</Message>)
-            :<Row >
+            :<>
+            <Landing/>
+            <Row >
                 {meals.map((meal) =>( 
                     <Col  md={4} key={meal._id}>  
                         <Meal meal={meal}/>
                     </Col>
                     ))}
             </Row>
+        </>
         }
             
         </>
