@@ -6,7 +6,8 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { saveShippingAdress } from '../actions/cartAction'
+import { saveShippingAddress } from '../actions/cartAction'
+import CheckoutSteps from '../components/CheckoutSteps'
 
 const ShippingView = ({history}) => {
     const cart = useSelector(state => state.cart);
@@ -20,13 +21,14 @@ const ShippingView = ({history}) => {
     
     const submitHandler = (e) =>{
         e.preventDefault();
-        dispatch(saveShippingAdress({address, city, postalCode, country}))
+        dispatch(saveShippingAddress({address, city, postalCode, country}))
         history.push('/payment')
     }
 
     
     return (
         <FormContainer>
+            <CheckoutSteps step1 step2/>
             <h1>Shipping</h1>
             <Form onSubmit={submitHandler}>
             <Form.Group controlId='address'>

@@ -11,6 +11,8 @@ import LoginView from './views/LoginView';
 import RegisterView from './views/RegisterView';
 import ProfileView from './views/ProfileView';
 import ShippingView from './views/ShippingView';
+import PaymentView from './views/PaymentView';
+import PlaceOrderView from './views/PlaceOrderView';
 
 
 
@@ -28,6 +30,8 @@ const App = () => {
               <Route path='/cart/:id?' component={CartView} exact/>
               <Route path='/profile' component={ProfileView} exact/>
               <Route path='/shipping' component={ShippingView} exact/>
+              <Route path='/payment' component={PaymentView} exact/>
+              <Route path='/placeorder' component={PlaceOrderView} exact/>
 
           </Container>
         </main>

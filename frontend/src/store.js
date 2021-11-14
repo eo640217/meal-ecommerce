@@ -4,7 +4,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {mealListReducer, mealDetailsReducer, mealTopRateReducer} from './reducers/mealReducers'
 import {cartReducer} from './reducers/cartReducers';
 import {userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer} from './reducers/userReducers';
-
+import {orderCreateReducer} from './reducers/orderReducers'
 const reducer = combineReducers({
     mealList: mealListReducer,
     mealDetails: mealDetailsReducer,
@@ -14,8 +14,10 @@ const reducer = combineReducers({
     mealTopRated: mealTopRateReducer,
     userDetails : userDetailsReducer,
     userUpdateProfile : userUpdateProfileReducer,
+    orderCreate: orderCreateReducer
     // shippingAd
 });
+
 const cartItemsFromStorage = localStorage.getItem('cartItems') 
 ? JSON.parse(localStorage.getItem('cartItems'))
 :[]
