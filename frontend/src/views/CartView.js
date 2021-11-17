@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Row, Col, Image, Card,ListGroup, Button, Form, Alert} from 'react-bootstrap';
+import {Row, Col, Image, Card,ListGroup, Button, Form, Alert, FloatingLabel} from 'react-bootstrap';
 import {addToCart, removeFromCart} from '../actions/cartAction'
 import Message from "../components/Message";
 
@@ -44,15 +44,17 @@ const CartView = ({match,location,history}) => {
                                 </Col>
                                 <Col className='ma2'>$ {item.price}</Col>
                                 <Col className=''>
-                                    <Form.Select 
+                                <FloatingLabel controlId="floatingSelect" label="Qty">
+                                    <Form.Select size='md' 
                                         className=''                                    
                                         as='select' 
                                         value={item.qty}
                                         onChange={(e)=>dispatch(addToCart(item.meal, Number(e.target.value)))}>                                   
 
-                                        {[...Array(item.instock).keys()].map((x)=>(<option key={x+1} value = {x+1}>{x+1}</option>))}
+                                        {[...Array(item.instock).keys()].map((x)=>(<option key={x+1} value={x+1}>{x+1}</option>))}
 
                                     </Form.Select>
+                                    </FloatingLabel>
                                 </Col>
                                 <Col className=''>
                                     <Button type='button' variant='light' onClick={() => removeFromCartHandler(item.meal)}>
@@ -81,7 +83,7 @@ const CartView = ({match,location,history}) => {
                             }
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <Button sm={2}
+                            <Button
                                 type='button'
                                 variant='dark'
                                 onClick={checkoutHandler}>

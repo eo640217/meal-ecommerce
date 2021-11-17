@@ -20,15 +20,8 @@ const HomeView = () => {
 
     return (
         <>
-        <Card className="">
-            <div className=''><MealCarousel/></div>
-            <Col>
-            <Card className='tc'>
-                <h2 className='b'>Meals of the Week</h2>            
-                <p>Enjoy New Meals every Sunday!</p>        
-            </Card>    
-            </Col>
-            
+        <Card className="bg">
+            <div className=''><MealCarousel/></div>          
             
         </Card>
             {
