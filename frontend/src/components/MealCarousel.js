@@ -35,9 +35,10 @@ const MealCarousel = () => {
                 <Link to={`/meal/${meal._id}`}>
                     <Image src={meal.imageCarousel} alt={meal.name} fluid />
                 </Link>
-                <Row sm={2}>
-                <Col><h5 className='bg-near-white pa3'>{meal.name} ($ {meal.price})</h5></Col>
-                <Col className='tr pa2'><h2>Meals of the Week</h2>Enjoy New Meals every Sunday!</Col>
+                <Row sm={3}>
+                <Col className='pa3'><h5 className='bg-near-white pa3'>{meal.name} ($ {meal.price})</h5></Col>
+                <Col className='pa2'><h2>Meals of the Week</h2></Col>
+                <Col className='pa3 tc'>Enjoy New Meals<br/> every Sunday!</Col>
                 </Row>  
             </Carousel.Item>
             ))}
