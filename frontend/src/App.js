@@ -13,6 +13,7 @@ import ProfileView from './views/ProfileView';
 import ShippingView from './views/ShippingView';
 import PaymentView from './views/PaymentView';
 import PlaceOrderView from './views/PlaceOrderView';
+import OrderView from './views/OrderView';
 
 
 
@@ -21,7 +22,7 @@ const App = () => {
     <Router>
        <div className="bg-moon-gray">
         <Header />
-        <main className='py-3 tc'>
+        <main className='py-3'>
           <Container>
               <Route path='/signin' component={LoginView} exact/>
               <Route path='/register' component={RegisterView} exact/>
@@ -32,6 +33,7 @@ const App = () => {
               <Route path='/shipping' component={ShippingView} exact/>
               <Route path='/payment' component={PaymentView} exact/>
               <Route path='/placeorder' component={PlaceOrderView} exact/>
+              <Route path='/order/:id' component={OrderView} exact/>
 
           </Container>
         </main>

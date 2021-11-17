@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav} from 'react-bootstrap';
 import { logout } from '../actions/userAction';
 
-const Header = () =>{
+const Header = ({}) =>{
 
     const dispatch = useDispatch();
     const userLogin = useSelector(state => state.userLogin);
@@ -13,6 +13,8 @@ const Header = () =>{
     const logoutHandler = () => {
         dispatch(logout());
     }
+    // useEffect(() =>{history.push(`/`)}, [history])
+
     return (
         <header>
             <Navbar className='shadow' collapseOnSelect expand="lg" bg="cool-gray" >

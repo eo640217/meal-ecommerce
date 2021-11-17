@@ -27,7 +27,7 @@ const CartView = ({match,location,history}) => {
     return (
         <Row>
                 <h1>Shopping Cart</h1>
-            <Col sm= {4}md={6} lg={8}>
+            <Col sm={4}md={6} lg={8}>
                 {
                 cartItems.length === 0 
                 ? (<Message> Cart is Empty <Link to='/'>Go Back</Link></Message>)
@@ -35,29 +35,31 @@ const CartView = ({match,location,history}) => {
                     <ListGroup variant='flush' className='shadow-3'>
                     {cartItems.map(item => (
                         <ListGroup.Item key={item.meal} className='pa1'>
-                            <Row>
-                                <Col md={3}>
-                                    <Image src={item.image} alt={item.name} fluid rounded />
+                            <Row className='pa2 ma2 '>
+                                <Col>
+                                    <Image className='w-third' src={item.image} alt={item.name} fluid rounded />
                                 </Col>
-                                <Col md={3} className='b f3 pt6 '> 
-                                    <Link to = {`/meal/${item.meal}`} >{item.name}</Link>
+                                <Col className='b ma2 '> 
+                                    <Link className='hover-blue'to = {`/meal/${item.meal}`} >{item.name}</Link>
                                 </Col>
-                                <Col md={2} className='f4 pt6 '>$ {item.price}</Col>
-                                <Col md={2} className='b pt6 '>
-                                    <Form.Control                                     
+                                <Col className='ma2'>$ {item.price}</Col>
+                                <Col className=''>
+                                    <Form.Select 
+                                        className=''                                    
                                         as='select' 
                                         value={item.qty}
                                         onChange={(e)=>dispatch(addToCart(item.meal, Number(e.target.value)))}>                                   
 
                                         {[...Array(item.instock).keys()].map((x)=>(<option key={x+1} value = {x+1}>{x+1}</option>))}
 
-                                    </Form.Control>
+                                    </Form.Select>
                                 </Col>
-                                <Col sm={1} md={2} className='b pt6 '>
+                                <Col className=''>
                                     <Button type='button' variant='light' onClick={() => removeFromCartHandler(item.meal)}>
                                         <i className='fas fa-trash'></i>
                                     </Button>
                                 </Col>
+                            
 
                             </Row>
 
@@ -79,7 +81,7 @@ const CartView = ({match,location,history}) => {
                             }
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <Button 
+                            <Button sm={2}
                                 type='button'
                                 variant='dark'
                                 onClick={checkoutHandler}>

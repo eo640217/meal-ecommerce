@@ -6,15 +6,14 @@ const orderSchema = mongoose.Schema({
         required:true,
         ref:'User'
     },
-    email: {
-        type:String,
-        required:true,
-        unique:true
-    },
+    // email: {
+    //     type:String,
+    //     required:false
+    // },
     orderItems: [{
         name: {type:String, required:true},
         price: {type:Number, required:true},
-        quantity: {type:Number, required:true},
+        qty: {type:Number, required:true},
         image: {type:String, required:true},
         meal: {type:mongoose.Schema.Types.ObjectId, required:true, ref: 'Meal'},
     }],
@@ -25,22 +24,22 @@ const orderSchema = mongoose.Schema({
         country:{type:String,required:true},
 
     },
-    billingAddress:{
-        address:{type:String,required:true},
-        city:{type:String,required:true},
-        postalCode:{type:String,required:true},
-        country:{type:String,required:true},
+    // billingAddress:{
+    //     address:{type:String,required:true},
+    //     city:{type:String,required:true},
+    //     postalCode:{type:String,required:true},
+    //     country:{type:String,required:true},
 
-    },
+    // },
     isAdmin: {
         type:Boolean,
         required:true,
         default: false
     },
-    phoneNumber: {
-        type:Number,
-        required:true,
-    },
+    // phoneNumber: {
+    //     type:Number,
+    //     required:false,
+    // },
     paymentMethod: {
         type:String,
         required:true,
@@ -49,11 +48,11 @@ const orderSchema = mongoose.Schema({
         id:{type:String},
         status:{type:String},
         updateTime:{type:String},
-        email_address:{type:String},
+        emailAddress:{type:String},
     },
     orderStatus:{
         type:String,
-        required:true,
+        required:false,
     },
     trackingNumber:{
         type:String,
@@ -69,6 +68,11 @@ const orderSchema = mongoose.Schema({
         required:true,
         default:0
     },
+    totalPrice:{
+        type:Number,
+        required:true,
+        default:0
+    },
     isPaid:{
         type:Boolean,
         required:true,
@@ -79,6 +83,11 @@ const orderSchema = mongoose.Schema({
     },
     deliveredAt:{
         type:Date
+    },
+    isDellivered:{
+        type:Boolean,
+        required:true,
+        default:false
     },
 
     

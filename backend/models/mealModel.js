@@ -44,6 +44,7 @@ const mealSchema = mongoose.Schema({
     },
     numReviews:{
         type:Number,
+        default:0
     },
     quantity:{
         type:Number,

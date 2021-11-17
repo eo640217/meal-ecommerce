@@ -8,78 +8,71 @@ import TextField from '@mui/material/TextField';
 import { saveShippingAddress } from '../actions/cartAction'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { Link } from 'react-router-dom'
-import {createOrder} from '../actions/orderAction'
+import {createOrder, getOrderDetails} from '../actions/orderAction'
 
-const PlaceOrderView = ({history}) => {
+const OrderView = ({match}) => {
     const dispatch = useDispatch();
-    const cart = useSelector(state=>state.cart);
-    //calculate prices
-    const addDecimals = (num) => {return (Math.round(num*100)/100).toFixed(2)}
-    cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc,item) => acc+item.price *item.qty, 0));
-    cart.shippingPrice = addDecimals(cart.itemsPrice < 50 ? 20 : 0)
-    cart.taxPrice = addDecimals(Number((0.13 * cart.itemsPrice).toFixed(2)));
-    cart.totalPrice =( Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2);
-
-    const orderCreate = useSelector(state=>state.orderCreate);
-    const {order, success, error} = orderCreate
-
-    useEffect(() =>{
-        if(success){
-            history.push(`/order/${order._id}`)
-        }
-        // eslint-disable-next-line
-    }, [history, success])
-
-    const placeOrderHandler = () => {
-        dispatch(createOrder({
-            orderItems: cart.cartItems,
-            shippingAddress: cart.shippingAddress,
-            paymentMethod: cart.paymentMethod,
-            shippingPrice: cart.shippingPrice,
-            taxPrice: cart.taxPrice,
-            itemsPrice: cart.itemsPrice,
-            totalPrice: cart.totalPrice,
-        }))
+    const orderDetails = useSelector((state)=>state.orderDetails);
+    const {order, loading,error} = orderDetails;
+    const orderId = match.params.id;
+    if (!loading){
+        const addDecimals = (num) => {return (Math.round(num*100)/100).toFixed(2)}
+        order.itemsPrice = addDecimals(order.orderItems.reduce((acc,item) => acc+item.price *item.qty, 0));
     }
+    
+    
+    useEffect(() =>{
+        if(!order || order._id !== orderId){
+            dispatch(getOrderDetails(orderId))
+        }
+    }, [order, orderId])
+
 
     return (
+        
+        loading ? <Loader/> :error ?<Message variant='danger'>{error}</Message>:
         <>
-            <CheckoutSteps step3 step4/>
+            <h1>Order {order._id}</h1>
             <Row>
                 <Col md={8}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h2>Shipping</h2>
+                            <p><strong>Name: </strong>{order.user.name}</p>
+                            <p><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
                             <p>
                                 <strong>Address: </strong>
-                                {cart.shippingAddress.address}{' '},
-                                {cart.shippingAddress.city}{' '},
-                                {cart.shippingAddress.postalCode}{' '},
-                                {cart.shippingAddress.country}
+                                {order.shippingAddress.address}{' '},
+                                {order.shippingAddress.city}{' '},
+                                {order.shippingAddress.postalCode}{' '},
+                                {order.shippingAddress.country}
                             </p>
+                            {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message>:<Message variant='danger'>Not Delivered</Message>}
+
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Payment Method</h2>
                             <p>
                                 <strong>Method</strong>
-                                :{cart.paymentMethod}{' '}
+                                :{order.paymentMethod}{' '}
                             </p>
+                            {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message>:<Message variant='danger'>Not Paid</Message>}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Order Items</h2>
-                            {cart.cartItems.length == 0
-                            ?<Message>Your Cart is Empty</Message>
+                            {order.orderItems.length == 0
+                            ?<Message>Order is Empty</Message>
                             : <ListGroup variant='flush'>
-                                {cart.cartItems.map((item, index)=>(
+                                {order.orderItems.map((item, index)=>(
                                     <ListGroup.Item>
                                         <Row>
-                                            <Col>
-                                                <Image src={item.image} alt={item.name} fluid rounded/>
+                                            <Col >
+                                                <Image className='w-20' src={item.image} alt={item.name} fluid rounded/>
                                             </Col>
-                                            <Col>
-                                                <Link to={`/meal/${item.meal}`} fluid>{item.name}</Link>
+                                            <Col className='pa2 ma2'>
+                                                <Link className='hover-light-blue' to={`/meal/${item.meal}`} fluid><h5>{item.name}</h5></Link>
                                             </Col>
-                                            <Col md={4} className='bg-lightest-blue pa2'>
+                                            <Col md={4} className='bg-lightest-blue pa2 ma2'>
                                                 {item.qty} x $ {item.price} = $ {item.qty * item.price}
                                             </Col>
                                         </Row>
@@ -98,46 +91,41 @@ const PlaceOrderView = ({history}) => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>$ {cart.itemsPrice}</Col>
+                                    <Col>$ {order.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>$ {cart.shippingPrice}</Col>
+                                    <Col>$ {order.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>$ {cart.taxPrice}</Col>
+                                    <Col>$ {order.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col><h5>Total</h5></Col>
-                                    <Col>$ {cart.totalPrice}</Col>
+                                    <Col>$ {order.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 {error && <Message variant='danger'>{error}</Message>}
                             </ListGroup.Item>
-                            <ListGroup.Item>
-                              <Button 
-                                type='button' 
-                                className='btn-block' 
-                                disabled={cart.cartItems==0} 
-                                onClick={placeOrderHandler}>
-                                Place Order
-                                </Button>
-                            </ListGroup.Item>
+                            
                         </ListGroup>
                     </Card>
                 </Col>
             </Row>
-            
         </>
+           
+            
+    
     )
 }
 
-export default PlaceOrderView
+
+export default OrderView
