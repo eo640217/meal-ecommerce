@@ -44,5 +44,4 @@ const destroyData = async ()=>{
         process.exit(1);  
     }
 }
-
 process.argv[2] == '-d' ? destroyData() : importData(); 
