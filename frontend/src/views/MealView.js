@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
-import {Row, Col, Image, Card,ListGroup, Button, Form, Alert} from 'react-bootstrap';
+import {Row, Col, Image, Card,ListGroup, Button, Form} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import { listMealDetails } from "../actions/mealAction";
 import Rating from '../components/Rating';

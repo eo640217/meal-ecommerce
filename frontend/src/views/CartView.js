@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Row, Col, Image, Card,ListGroup, Button, Form, Alert, FloatingLabel} from 'react-bootstrap';
+import {Row, Col, Image, Card,ListGroup, Button, Form, FloatingLabel} from 'react-bootstrap';
 import {addToCart, removeFromCart} from '../actions/cartAction'
 import Message from "../components/Message";
 

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { saveShippingAddress } from '../actions/cartAction'
+// import Loader from '../components/Loader'
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
+// import { saveShippingAddress } from '../actions/cartAction'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { Link } from 'react-router-dom'
 import {createOrder} from '../actions/orderAction'
@@ -67,7 +67,7 @@ const PlaceOrderView = ({history}) => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Order Items</h2>
-                            {cart.cartItems.length == 0
+                            {cart.cartItems.length === 0
                             ?<Message>Your Cart is Empty</Message>
                             : <ListGroup variant='flush'>
                                 {cart.cartItems.map((item, index)=>(
@@ -126,7 +126,7 @@ const PlaceOrderView = ({history}) => {
                               <Button 
                                 type='button' 
                                 className='btn-block' 
-                                disabled={cart.cartItems==0} 
+                                disabled={cart.cartItems===0} 
                                 onClick={placeOrderHandler}>
                                 Place Order
                                 </Button>

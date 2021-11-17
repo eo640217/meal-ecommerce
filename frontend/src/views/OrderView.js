@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
+import React, { useEffect } from 'react'
+import {Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { saveShippingAddress } from '../actions/cartAction'
-import CheckoutSteps from '../components/CheckoutSteps'
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
+// import { saveShippingAddress } from '../actions/cartAction'
+// import CheckoutSteps from '../components/CheckoutSteps'
+import {getOrderDetails} from '../actions/orderAction'
 import { Link } from 'react-router-dom'
-import {createOrder, getOrderDetails} from '../actions/orderAction'
 
 const OrderView = ({match}) => {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const OrderView = ({match}) => {
         if(!order || order._id !== orderId){
             dispatch(getOrderDetails(orderId))
         }
-    }, [order, orderId])
+    }, [dispatch, order, orderId])
 
 
     return (
@@ -60,7 +60,7 @@ const OrderView = ({match}) => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Order Items</h2>
-                            {order.orderItems.length == 0
+                            {order.orderItems.length === 0
                             ?<Message>Order is Empty</Message>
                             : <ListGroup variant='flush'>
                                 {order.orderItems.map((item, index)=>(

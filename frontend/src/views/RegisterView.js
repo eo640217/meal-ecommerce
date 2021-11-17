@@ -6,8 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {register} from '../actions/userAction'
 import FormContainer from '../components/FormContainer'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
 
 
 const RegisterView = ({location, history}) => {

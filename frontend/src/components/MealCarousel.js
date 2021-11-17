@@ -4,7 +4,7 @@ import {Carousel, Col, Image, Row} from 'react-bootstrap'
 import { useDispatch,useSelector } from 'react-redux';
 import Loader from './Loader'
 import Message from './Message'
-import { listTopMeals, listMeals } from '../actions/mealAction'
+import {listMeals } from '../actions/mealAction'
 
 const MealCarousel = () => {
     // const dispatch = useDispatch();
