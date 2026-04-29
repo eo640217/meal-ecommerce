@@ -124,8 +124,6 @@ const ProfileView = ({ history }) => {
                         )}
                     </div>
                 </Col>
-                    </div>
-                </Col>
             </Row>
         </Container>
     )
