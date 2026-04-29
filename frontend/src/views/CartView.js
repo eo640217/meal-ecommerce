@@ -1,100 +1,89 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Row, Col, Image, Card,ListGroup, Button, Form, FloatingLabel} from 'react-bootstrap';
+import {Row, Col, Container} from 'react-bootstrap';
 import {addToCart, removeFromCart} from '../actions/cartAction'
 import Message from "../components/Message";
 
 
-const CartView = ({match,location,history}) => {
+const CartView = ({match, location, history}) => {
     const mealId = match.params.id;
-    const qty = location.search ? Number(location.search.split('=')[1]):1
+    const qty = location.search ? Number(location.search.split('=')[1]) : 1;
     const dispatch = useDispatch();
     useEffect(() => {
-        if (mealId) {
-            dispatch(addToCart(mealId,qty))
-        }
-    }, [dispatch,mealId,qty])
+        if (mealId) dispatch(addToCart(mealId, qty));
+    }, [dispatch, mealId, qty]);
+
     const cart = useSelector(state => state.cart);
     const {cartItems} = cart;
-    const removeFromCartHandler = (id) =>{
-        dispatch(removeFromCart(id))
-    };
-    const checkoutHandler = (id) =>{
-        history.push('/shipping')
-    }
-    
+
+    const removeFromCartHandler = (id) => { dispatch(removeFromCart(id)); };
+    const checkoutHandler = () => { history.push('/shipping'); };
+    const total = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
+    const totalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
+
     return (
-        <Row>
-                <h1>Shopping Cart</h1>
-            <Col sm={4}md={6} lg={8}>
-                {
-                cartItems.length === 0 
-                ? (<Message> Cart is Empty <Link to='/'>Go Back</Link></Message>)
-                : (
-                    <ListGroup variant='flush' className='shadow-3'>
-                    {cartItems.map(item => (
-                        <ListGroup.Item key={item.meal} className='pa1'>
-                            <Row className='pa2 ma2 '>
-                                <Col>
-                                    <Image className='w-third' src={item.image} alt={item.name} fluid rounded />
-                                </Col>
-                                <Col className='b ma2 '> 
-                                    <Link className='hover-blue'to = {`/meal/${item.meal}`} >{item.name}</Link>
-                                </Col>
-                                <Col className='ma2'>$ {item.price}</Col>
-                                <Col className=''>
-                                <FloatingLabel controlId="floatingSelect" label="Qty">
-                                    <Form.Select size='md' 
-                                        className=''                                    
-                                        as='select' 
-                                        value={item.qty}
-                                        onChange={(e)=>dispatch(addToCart(item.meal, Number(e.target.value)))}>                                   
-
-                                        {[...Array(item.instock).keys()].map((x)=>(<option key={x+1} value={x+1}>{x+1}</option>))}
-
-                                    </Form.Select>
-                                    </FloatingLabel>
-                                </Col>
-                                <Col className=''>
-                                    <Button type='button' variant='light' onClick={() => removeFromCartHandler(item.meal)}>
-                                        <i className='fas fa-trash'></i>
-                                    </Button>
-                                </Col>
-                            
-
-                            </Row>
-
-                        </ListGroup.Item>
-                    ))}
-                    </ListGroup>
-                )}
-            </Col> 
-            <Col></Col>  
-            <Col sm= {1} md = {3}>
-                <Card>
-                    <ListGroup variant='flush'>
-                        <ListGroup.Item>
-                            <h3>Subtotal ({cartItems.reduce((acc,item)=>acc+=item.qty,0)}) items </h3>
-                            $
-                            {cartItems
-                            .reduce((acc,item)=>acc+=(item.price*item.qty),0)
-                            .toFixed(2)
-                            }
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <Button
-                                type='button'
-                                variant='dark'
-                                onClick={checkoutHandler}>
-                                    Checkout
-                                    
-                            </Button>
-                        </ListGroup.Item>
-
-                    </ListGroup>
-                </Card>
-            </Col>    
-        </Row>)
+        <Container className='page-container'>
+            <h1 className='page-title'>Shopping Cart</h1>
+            <Row className='g-4'>
+                <Col lg={8}>
+                    {cartItems.length === 0 ? (
+                        <Message>
+                            Your cart is empty. <Link to='/'>Browse Menu</Link>
+                        </Message>
+                    ) : (
+                        cartItems.map(item => (
+                            <div key={item.meal} className='cart-item'>
+                                <img className='cart-item-img' src={item.image} alt={item.name} />
+                                <div style={{flex: 1, minWidth: 0}}>
+                                    <Link to={`/meal/${item.meal}`} className='cart-item-name d-block mb-1'>{item.name}</Link>
+                                    <span className='cart-item-price'>${item.price}</span>
+                                </div>
+                                <select
+                                    className='cart-qty-select form-select'
+                                    value={item.qty}
+                                    onChange={(e) => dispatch(addToCart(item.meal, Number(e.target.value)))}
+                                >
+                                    {[...Array(item.instock).keys()].map(x => (
+                                        <option key={x+1} value={x+1}>{x+1}</option>
+                                    ))}
+                                </select>
+                                <button className='cart-remove-btn' onClick={() => removeFromCartHandler(item.meal)}>
+                                    <i className='fas fa-trash-alt'></i>
+                                </button>
+                            </div>
+                        ))
+                    )}
+                </Col>
+                <Col lg={4}>
+                    <div className='cart-summary'>
+                        <div className='cart-summary-title'>Order Summary</div>
+                        <div className='cart-summary-row'>
+                            <span>Items ({totalQty})</span>
+                            <span>${total}</span>
+                        </div>
+                        <div className='cart-summary-row'>
+                            <span>Delivery</span>
+                            <span>{Number(total) > 50 ? <span style={{color:'var(--success)'}}>Free</span> : '$20.00'}</span>
+                        </div>
+                        <div className='cart-summary-row total'>
+                            <span>Total</span>
+                            <span>${(Number(total) + (Number(total) > 50 ? 0 : 20)).toFixed(2)}</span>
+                        </div>
+                        <div style={{marginTop: '1.25rem'}}>
+                            <button
+                                className='btn-food'
+                                disabled={cartItems.length === 0}
+                                onClick={checkoutHandler}
+                            >
+                                Proceed to Checkout
+                            </button>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
-export default CartView
+export default CartView;
+

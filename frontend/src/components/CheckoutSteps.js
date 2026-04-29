@@ -1,52 +1,31 @@
-import React from 'react'
-import {Nav} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const CheckoutSteps = ({step1, step2, step3, step4}) => {
+const steps = [
+    { label: 'Sign In', path: '/signin' },
+    { label: 'Shipping', path: '/shipping' },
+    { label: 'Payment', path: '/payment' },
+    { label: 'Review', path: '/placeorder' },
+];
+
+const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+    const active = [step1, step2, step3, step4];
     return (
-        <Nav className='justify-content-center mb-4'>
-            <Nav.Item>
-                {step1 ? (
-                    <LinkContainer to='/signin'>
-                        <Nav.Link>1. Sign in</Nav.Link>
-                    </LinkContainer>
-                ):(
-                <Nav.Link disabled>Sign in</Nav.Link>
-                )}
-            </Nav.Item>
-
-            <Nav.Item>
-                {step2 ? (
-                    <LinkContainer to='/shipping'>
-                        <Nav.Link>2. Shipping</Nav.Link>
-                    </LinkContainer>
-                ):(
-                <Nav.Link disabled>2. Shipping</Nav.Link>
-                )}
-            </Nav.Item>
-
-            <Nav.Item>
-                {step3 ? (
-                    <LinkContainer to='/payment'>
-                        <Nav.Link>3. Payment</Nav.Link>
-                    </LinkContainer>
-                ):(
-                <Nav.Link disabled>3. Payment</Nav.Link>
-                )}
-            </Nav.Item>
-
-            <Nav.Item>
-                {step4 ? (
-                    <LinkContainer to='/placeorder'>
-                        <Nav.Link>4. Place Order</Nav.Link>
-                    </LinkContainer>
-                ):(
-                <Nav.Link disabled>4. Place Order</Nav.Link>
-                )}
-            </Nav.Item>
-            
-        </Nav>
-    )
+        <ol className='checkout-track'>
+            {steps.map((step, i) => (
+                <React.Fragment key={step.label}>
+                    {i > 0 && <li className={`ck-connector${active[i] ? ' active' : ''}`} />}
+                    <li className={`ck-step${active[i] ? ' active' : ''}`}>
+                        <span className='ck-step-num'>{i + 1}</span>
+                        {active[i]
+                            ? <Link to={step.path} style={{ color: 'inherit', textDecoration: 'none' }}>{step.label}</Link>
+                            : <span>{step.label}</span>
+                        }
+                    </li>
+                </React.Fragment>
+            ))}
+        </ol>
+    );
 }
 
-export default CheckoutSteps
+export default CheckoutSteps;

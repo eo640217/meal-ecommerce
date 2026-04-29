@@ -1,102 +1,87 @@
 import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
-import {Row, Col, Image, Card,ListGroup, Button, Form} from 'react-bootstrap';
+import {Row, Col, Image, Form, Button, Container} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import { listMealDetails } from "../actions/mealAction";
 import Rating from '../components/Rating';
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-// import Message from "../components/Message";
 
 const MealView = ({match, history}) => {
-
     const dispatch = useDispatch();
-    const mealDetails =  useSelector(state => state.mealDetails);
+    const mealDetails = useSelector(state => state.mealDetails);
     const {loading, error, meal} = mealDetails;
-    const [qty,setQty] = useState(1);
+    const [qty, setQty] = useState(1);
 
     useEffect(() => {
-        dispatch(listMealDetails(match.params.id))            
-    }, [dispatch,match])
+        dispatch(listMealDetails(match.params.id))
+    }, [dispatch, match])
 
-    const addToCartHandler = ()=>{
+    const addToCartHandler = () => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
     }
+
     return (
-        <>
-            <Link className='btn btn-dark my-3 shadow-1' to ='/'>Back</Link> 
-        {
-            loading
-            ? <Loader/> 
-            : error
-            ? (<Message variant='danger'>{error}</Message>)
-            :<Row>
-                <Col md={6}>
-                    <Image className='shadow-1' src={meal.image} alt={meal.image}fluid/>
-                </Col>
-
-                <Col md={3} >
-                    <ListGroup.Item >
-                        <h2>{meal.name}</h2>
-                    </ListGroup.Item>
-
-                    <ListGroup.Item>
-                        <Rating value={meal.rating} text={`${meal.numReviews} Reviews`} color='#F0A500'/>
-                    </ListGroup.Item>
-                    
-                    <ListGroup.Item>
-                        <h6>Description:</h6> 
-                        {meal.description}
-                    </ListGroup.Item>
-                    
-                </Col>
-                <Col md={3} >
-                    <Card>
-                        <ListGroup variant='flush' >
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col className='b'>Status:</Col>
-                                    <Col>{meal.quantity >0? "In Stock" : "Out of Stock"}</Col>
-                                </Row>  
-                            </ListGroup.Item> 
-                                
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col className='b'>Price:</Col>
-                                    <Col>$ {meal.price}</Col>
-                                </Row>
-                            </ListGroup.Item> 
-
+        <Container className='page-container'>
+            <Link to='/' className='btn-back'>
+                <i className='fas fa-arrow-left'></i> Back to Menu
+            </Link>
+            {loading ? <Loader /> : error ? (
+                <Message variant='danger'>{error}</Message>
+            ) : (
+                <Row className='g-4'>
+                    <Col md={6}>
+                        <img className='product-img' src={meal.image} alt={meal.name} />
+                    </Col>
+                    <Col md={3}>
+                        <h1 className='product-name'>{meal.name}</h1>
+                        <Rating value={meal.rating} text={`${meal.numReviews} Reviews`} color='#ffc300' />
+                        <div className='product-price'>${meal.price}</div>
+                        <p className='product-desc'>{meal.description}</p>
+                    </Col>
+                    <Col md={3}>
+                        <div className='purchase-card'>
+                            <div className='purchase-row'>
+                                <span className='text-muted'>Status</span>
+                                <span className={`stock-badge ${meal.quantity > 0 ? 'in' : 'out'}`}>
+                                    {meal.quantity > 0 ? 'In Stock' : 'Out of Stock'}
+                                </span>
+                            </div>
+                            <div className='purchase-row'>
+                                <span className='text-muted'>Price</span>
+                                <span style={{fontWeight: 700, color: 'var(--primary)'}}>${meal.price}</span>
+                            </div>
                             {meal.quantity > 0 && (
-                                <ListGroup.Item >
-                                    <Row>
-                                        <Col>Quantity</Col>
-                                        <Col>
-                                            <Form.Control as='select' value={qty} onChange={(e)=>setQty(e.target.value)}>
-                                                {/* displays only up to the amount of stock the item has */}
-                                                {[...Array(meal.quantity).keys()].map(x=>(<option key={x+1} value = {x+1}>{x+1}</option>))}
-                                            </Form.Control>
-                                        </Col>
-                                    </Row>
-                                </ListGroup.Item> 
+                                <div className='purchase-row'>
+                                    <span className='text-muted'>Qty</span>
+                                    <Form.Control
+                                        as='select'
+                                        className='qty-select'
+                                        value={qty}
+                                        onChange={(e) => setQty(e.target.value)}
+                                        style={{width: 'auto'}}
+                                    >
+                                        {[...Array(meal.quantity).keys()].map(x => (
+                                            <option key={x+1} value={x+1}>{x+1}</option>
+                                        ))}
+                                    </Form.Control>
+                                </div>
                             )}
-
-                            <ListGroup.Item >
-                                <Button 
-                                className='btn btn-dark' 
-                                type='button' 
-                                disabled={meal.quantity === 0}
-                                onClick={addToCartHandler}
+                            <div style={{marginTop: '1.25rem'}}>
+                                <Button
+                                    className='btn-food'
+                                    type='button'
+                                    disabled={meal.quantity === 0}
+                                    onClick={addToCartHandler}
                                 >
-                                    Add to Cart
+                                    <i className='fas fa-shopping-bag me-2'></i>Add to Cart
                                 </Button>
-                            </ListGroup.Item> 
-                        </ListGroup>
-                    </Card> 
-                </Col>
-            </Row>
-        }
-    </>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            )}
+        </Container>
     );
 }
-export default MealView
+export default MealView;

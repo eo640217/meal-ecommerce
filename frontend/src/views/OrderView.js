@@ -1,131 +1,85 @@
 import React, { useEffect } from 'react'
-import {Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
+import { Row, Col, Image, Container } from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-// import Box from '@mui/material/Box';
-// import TextField from '@mui/material/TextField';
-// import { saveShippingAddress } from '../actions/cartAction'
-// import CheckoutSteps from '../components/CheckoutSteps'
 import {getOrderDetails} from '../actions/orderAction'
 import { Link } from 'react-router-dom'
 
 const OrderView = ({match}) => {
     const dispatch = useDispatch();
-    const orderDetails = useSelector((state)=>state.orderDetails);
-    const {order, loading,error} = orderDetails;
+    const orderDetails = useSelector((state) => state.orderDetails);
+    const {order, loading, error} = orderDetails;
     const orderId = match.params.id;
-    if (!loading){
-        const addDecimals = (num) => {return (Math.round(num*100)/100).toFixed(2)}
-        order.itemsPrice = addDecimals(order.orderItems.reduce((acc,item) => acc+item.price *item.qty, 0));
+
+    if (!loading && order) {
+        const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2);
+        order.itemsPrice = addDecimals(order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0));
     }
-    
-    
-    useEffect(() =>{
-        if(!order || order._id !== orderId){
-            dispatch(getOrderDetails(orderId))
-        }
+
+    useEffect(() => {
+        if (!order || order._id !== orderId) dispatch(getOrderDetails(orderId));
     }, [dispatch, order, orderId])
 
-
-    return (
-        
-        loading ? <Loader/> :error ?<Message variant='danger'>{error}</Message>:
-        <>
-            <h1>Order {order._id}</h1>
-            <Row>
+    return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+        <Container className='page-container'>
+            <h1 className='page-title' style={{fontSize:'1.3rem'}}>
+                Order <span style={{color:'var(--text-muted)', fontWeight:400, fontSize:'1rem'}}>#{order._id}</span>
+            </h1>
+            <Row className='g-4'>
                 <Col md={8}>
-                    <ListGroup variant='flush'>
-                        <ListGroup.Item>
-                            <h2>Shipping</h2>
-                            <p><strong>Name: </strong>{order.user.name}</p>
-                            <p><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
-                            <p>
-                                <strong>Address: </strong>
-                                {order.shippingAddress.address}{' '},
-                                {order.shippingAddress.city}{' '},
-                                {order.shippingAddress.postalCode}{' '},
-                                {order.shippingAddress.country}
-                            </p>
-                            {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message>:<Message variant='danger'>Not Delivered</Message>}
-
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <h2>Payment Method</h2>
-                            <p>
-                                <strong>Method</strong>
-                                :{order.paymentMethod}{' '}
-                            </p>
-                            {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message>:<Message variant='danger'>Not Paid</Message>}
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <h2>Order Items</h2>
-                            {order.orderItems.length === 0
-                            ?<Message>Order is Empty</Message>
-                            : <ListGroup variant='flush'>
-                                {order.orderItems.map((item, index)=>(
-                                    <ListGroup.Item>
-                                        <Row>
-                                            <Col >
-                                                <Image className='w-20' src={item.image} alt={item.name} fluid rounded/>
-                                            </Col>
-                                            <Col className='pa2 ma2'>
-                                                <Link className='hover-light-blue' to={`/meal/${item.meal}`} fluid><h5>{item.name}</h5></Link>
-                                            </Col>
-                                            <Col md={4} className='bg-lightest-blue pa2 ma2'>
-                                                {item.qty} x $ {item.price} = $ {item.qty * item.price}
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                ))}
-                                </ListGroup>}
-                        </ListGroup.Item>
-                    </ListGroup>
+                    <div className='order-section'>
+                        <div className='order-section-title'>Delivery</div>
+                        <p style={{margin:'0 0 4px', fontWeight:500}}>{order.user.name}</p>
+                        <p style={{margin:'0 0 4px', fontSize:'0.88rem', color:'var(--text-muted)'}}><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
+                        <p style={{margin:'0 0 8px', fontSize:'0.93rem'}}>
+                            {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
+                            {order.shippingAddress.postalCode}, {order.shippingAddress.country}
+                        </p>
+                        {order.isDelivered
+                            ? <Message variant='success'>Delivered on {order.deliveredAt}</Message>
+                            : <Message variant='danger'>Not yet delivered</Message>
+                        }
+                    </div>
+                    <div className='order-section'>
+                        <div className='order-section-title'>Payment</div>
+                        <p style={{margin:'0 0 8px', fontSize:'0.93rem'}}>Method: <strong>{order.paymentMethod}</strong></p>
+                        {order.isPaid
+                            ? <Message variant='success'>Paid on {order.paidAt}</Message>
+                            : <Message variant='danger'>Not yet paid</Message>
+                        }
+                    </div>
+                    <div className='order-section'>
+                        <div className='order-section-title'>Items</div>
+                        {order.orderItems.length === 0 ? (
+                            <Message>Order is empty</Message>
+                        ) : (
+                            order.orderItems.map((item, index) => (
+                                <div key={index} className='order-item-row'>
+                                    <Image src={item.image} alt={item.name} className='order-item-img' />
+                                    <div style={{flex:1}}>
+                                        <Link to={`/meal/${item.meal}`} style={{fontWeight:500, color:'var(--text)', fontSize:'0.93rem'}}>{item.name}</Link>
+                                    </div>
+                                    <span style={{fontSize:'0.9rem', color:'var(--text-muted)', whiteSpace:'nowrap'}}>
+                                        {item.qty} × ${item.price} = <strong style={{color:'var(--text)'}}>${(item.qty * item.price).toFixed(2)}</strong>
+                                    </span>
+                                </div>
+                            ))
+                        )}
+                    </div>
                 </Col>
                 <Col md={4}>
-                    <Card>
-                        <ListGroup variant='flush'>
-                            <ListGroup.Item>
-                                <h2>Order Summary</h2>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col>Items</Col>
-                                    <Col>$ {order.itemsPrice}</Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col>Shipping</Col>
-                                    <Col>$ {order.shippingPrice}</Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col>Tax</Col>
-                                    <Col>$ {order.taxPrice}</Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col><h5>Total</h5></Col>
-                                    <Col>$ {order.totalPrice}</Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                {error && <Message variant='danger'>{error}</Message>}
-                            </ListGroup.Item>
-                            
-                        </ListGroup>
-                    </Card>
+                    <div className='order-summary-card'>
+                        <div className='order-summary-title'>Order Summary</div>
+                        <div className='order-summary-row'><span>Items</span><span>${order.itemsPrice}</span></div>
+                        <div className='order-summary-row'><span>Shipping</span><span>${order.shippingPrice}</span></div>
+                        <div className='order-summary-row'><span>Tax</span><span>${order.taxPrice}</span></div>
+                        <div className='order-summary-row total'><span>Total</span><span>${order.totalPrice}</span></div>
+                    </div>
                 </Col>
             </Row>
-        </>
-           
-            
-    
+        </Container>
     )
 }
-
 
 export default OrderView
