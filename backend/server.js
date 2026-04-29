@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import morgan from 'morgan';
 const PORT = process.env.PORT || 5000
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
