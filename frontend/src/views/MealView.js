@@ -35,7 +35,7 @@ const MealView = ({match, history}) => {
                     </Col>
                     <Col md={3}>
                         <h1 className='product-name'>{meal.name}</h1>
-                        <Rating value={meal.rating} text={`${meal.numReviews} Reviews`} color='#ffc300' />
+                        <Rating value={meal.rating} text={`${meal.numReviews} Reviews`} color='var(--accent)' />
                         <div className='product-price'>${meal.price}</div>
                         <p className='product-desc'>{meal.description}</p>
                     </Col>

@@ -651,6 +651,96 @@ main { min-height: 80vh; }
 .rating .review-count { color: var(--text-muted); font-size: 0.75rem; margin-left: 4px; }
 .page-container { padding-top: 2rem; padding-bottom: 3rem; }
 
+/* ── PAYMENT OPTIONS ─────────────────────────────────────── */
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  background: var(--cream);
+  transition: border-color 0.15s, background 0.15s;
+  font-weight: 500;
+  user-select: none;
+}
+.payment-option.active {
+  border-color: var(--dark);
+  background: white;
+}
+.payment-option input[type='radio'] { accent-color: var(--dark); }
+
+/* ── ORDERS TABLE (profile page) ─────────────────────────── */
+.orders-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+.orders-wrap h2 {
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.orders-empty {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.orders-table-wrap { overflow-x: auto; }
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.orders-table thead tr { border-bottom: 1px solid var(--border); text-align: left; }
+.orders-table th {
+  padding: 8px 12px;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-family: 'Inter', sans-serif;
+}
+.orders-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.orders-table tbody tr:last-child td { border-bottom: none; }
+.orders-table .td-id { font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); }
+.orders-table .td-price { font-weight: 700; }
+
+.badge-paid, .badge-unpaid, .badge-pending {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0;
+  font-family: 'Inter', sans-serif;
+}
+.badge-paid    { background: #d1fae5; color: #065f46; }
+.badge-unpaid  { background: #fee2e2; color: #991b1b; }
+.badge-pending { background: #fef3c7; color: #92400e; }
+
+.order-link {
+  color: var(--dark);
+  font-weight: 700;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.15s;
+}
+.order-link:hover { color: var(--red); }
+
 /* ── BOOTSTRAP OVERRIDES ─────────────────────────────────── */
 .navbar { padding: 0 !important; height: var(--nav-height); background: var(--dark) !important; }
 .container { padding-left: 1.25rem; padding-right: 1.25rem; }

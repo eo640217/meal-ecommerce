@@ -25,15 +25,9 @@ const PaymentView = ({history}) => {
             <p className='form-sub'>How would you like to pay?</p>
             <Form onSubmit={submitHandler}>
                 <Form.Group className='form-group-gap'>
-                    <div style={{display:'flex', flexDirection:'column', gap:'0.75rem', marginTop:'0.5rem'}}>
+                    <div className='payment-options'>
                         {['PayPal', 'Credit Card'].map(method => (
-                            <label key={method} style={{
-                                display:'flex', alignItems:'center', gap:'12px',
-                                padding:'14px 16px', border: `2px solid ${paymentMethod === method ? 'var(--primary)' : 'var(--border)'}`,
-                                borderRadius:'var(--radius-sm)', cursor:'pointer',
-                                background: paymentMethod === method ? 'rgba(232,93,4,0.04)' : 'white',
-                                transition: 'all 0.2s'
-                            }}>
+                            <label key={method} className={`payment-option${paymentMethod === method ? ' active' : ''}`}>
                                 <Form.Check
                                     type='radio'
                                     name='paymentMethod'
@@ -41,9 +35,7 @@ const PaymentView = ({history}) => {
                                     checked={paymentMethod === method}
                                     onChange={(e) => setPaymentMethod(e.target.value)}
                                 />
-                                <span style={{fontWeight: 500}}>
-                                    {method === 'PayPal' ? '💳 PayPal' : '💳 Credit Card'}
-                                </span>
+                                <span>{method === 'PayPal' ? '💳 PayPal' : '💳 Credit Card'}</span>
                             </label>
                         ))}
                     </div>
